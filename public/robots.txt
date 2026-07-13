@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://typegen.com/sitemap.xml
