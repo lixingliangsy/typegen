@@ -1,0 +1,37 @@
+// pages/api/runs.ts — L2: list + export past TypeGen workflow runs.
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { PRODUCT } from '../../lib/product'
+import { listRuns, RunState } from '../../lib/runStore'
+
+function toCsv(rows: RunState[]): string {
+  const headers = ['runId', 'ts', 'step', 'status', 'source', 'error']
+  const esc = (v: unknown) => {
+    const s = v == null ? '' : String(v)
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s
+  }
+  const lines = rows.map((r) =>
+    [r.runId, r.updatedAt, r.step, r.status, (r.artifacts?.source as string) || '', r.error || '']
+      .map(esc)
+      .join(','),
+  )
+  return [headers.join(','), ...lines].join('\n')
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' })
+  const slug = String((PRODUCT as any).slug || 'product')
+  const rows = listRuns(500)
+
+  const fmt = String(req.query.format || req.query.export || 'json').toLowerCase()
+  if (fmt === 'csv') {
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+    res.setHeader('Content-Disposition', `attachment; filename="${slug}-runs.csv"`)
+    return res.status(200).send(toCsv(rows))
+  }
+  if (fmt === 'json') {
+    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('Content-Disposition', `attachment; filename="${slug}-runs.json"`)
+    return res.status(200).json({ ok: true, slug, exportedAt: new Date().toISOString(), count: rows.length, runs: rows })
+  }
+  return res.status(200).json({ slug, count: rows.length, runs: rows })
+}

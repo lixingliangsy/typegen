@@ -1,0 +1,45 @@
+# TypeGen - llms.txt
+
+> LLM-readable manifest following the https://llmstxt.org spec. What we are, who we serve, what we do, and how we price it — in plain text for AI agents and answer engines.
+
+## Name & positioning
+- Product name: TypeGen
+- Tagline: Infer TypeScript types from sample data.
+- Domain: https://typegen.lxsaihub.com/
+- Language: English (en)
+
+## What it does
+- Paste JSON or CSV and TypeGen infers clean TypeScript interfaces (or a Zod schema), explains its assumptions, and flags ambiguous fields you should double-check.
+- Sample data to TS types
+- Interfaces / type aliases / Zod
+- Explain inferred assumptions
+- Flag ambiguous fields
+
+## Pricing (USD)
+- **Free** — $0 — 12 inferences/mo
+- **Pro** — $19/mo — Unlimited, save history
+- Checkout: https://typegen.lxsaihub.com/api/checkout?cycle=monthly (monthly) / https://typegen.lxsaihub.com/api/checkout?cycle=yearly (yearly)
+
+## FAQ (high-signal Q&A for AI citation)
+Q1. Do I need to install anything?
+A1. No. TypeGen runs in your browser.
+Q2. Is my input kept private?
+A2. We use it only to generate your result and minimize retention. See Security.
+Q3. Does it guarantee compliance / correctness?
+A3. No. It is decision-support; you own the final call. See the honesty note in Security.
+Q4. Can I export the result?
+A4. Yes — JSON and CSV.
+Q5. Is there an API?
+A5. Yes, the web form is backed by a REST endpoint you can call from your pipeline.
+
+## Key pages
+- Home / landing: https://typegen.lxsaihub.com/
+- This manifest: https://typegen.lxsaihub.com/llms.txt
+
+## Integration & delivery
+- Web app (Next.js) deployed on Vercel
+- Payments via Waffo Pancake (merchant of record)
+- Analytics via Umami
+
+## Contact
+- Open the app: https://typegen.lxsaihub.com/
